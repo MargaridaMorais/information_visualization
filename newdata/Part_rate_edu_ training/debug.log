@@ -1,3 +1,0 @@
-[1001/153847.125:ERROR:file_io_win.cc(179)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: Acesso negado. (0x5)
-[1001/153847.129:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: O encaminhamento (pipe) foi terminado. (0x6D)
-[1001/153847.131:ERROR:file_io_win.cc(179)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: Acesso negado. (0x5)
