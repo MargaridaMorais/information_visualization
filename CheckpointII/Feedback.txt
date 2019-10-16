@@ -1,0 +1,18 @@
+Feedback on checkpoint II:
+- Data size, original and now
+- Data abstraction more organized (tables, ect)
+- Mention the dataset type in the data abstraction
+- Submit the initial datasets in fenix together with the filtered ones
+- 
+
+- Change value to the right name of the variable
+- Put images of the dataset in pentaho, not the json
+-
+
+
+
+----
+Doc:
+- Tentar pôr no doc as outras data samples, tentar reduzir o tamanho...
+- Completar parte de Selected and Derived Data
+- Verificar a parte do data cleaning process
