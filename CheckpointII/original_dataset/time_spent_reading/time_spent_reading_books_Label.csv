@@ -1,0 +1,67 @@
+"DATASET: Time spent, participation time and participation rate in the main activity by sex and age group [tus_00age]"
+
+"LAST UPDATE: 20.11.18 10:37:06"
+
+"EXTRACTION DATE: 30.09.19 17:06:16"
+
+"SOURCE OF DATA: Eurostat"
+
+"UNIT"
+"Time spent (hh:mm)"
+"Participation time (hh:mm)"
+"Participation rate (%)"
+
+"GEO"
+"Belgium"
+"Bulgaria"
+"Germany (until 1990 former territory of the FRG)"
+"Estonia"
+"Greece"
+"Spain"
+"France"
+"Italy"
+"Latvia"
+"Lithuania"
+"Luxembourg"
+"Hungary"
+"Netherlands"
+"Austria"
+"Poland"
+"Romania"
+"Slovenia"
+"Finland"
+"United Kingdom"
+"Norway"
+"Serbia"
+"Turkey"
+
+"TIME"
+"2010"
+
+"SEX"
+"Total"
+
+"AGE"
+"Total"
+
+"ACL00"
+"Reading books"
+
+"No footnotes available"
+
+"Available flags:"
+"b","break in time series"
+"c","confidential"
+"d","definition differs, see metadata"
+"e","estimated"
+"f","forecast"
+"n","not significant"
+"p","provisional"
+"r","revised"
+"s","Eurostat estimate"
+"u","low reliability"
+"z","not applicable"
+
+"Special value:"
+":","not available"
+
