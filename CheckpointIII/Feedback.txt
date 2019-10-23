@@ -1,0 +1,10 @@
+Feedback on Checkpoint III:
+
+- Dashboard has 4 visualizations
+- Each question has to involve at least 2 visualizations
+- Each visuailization must be used in at least 2 questions
+- Using a visualization in a question doesn't mean it will answer the question, it can be used 
+to simply put a filter for example...
+- When you interact with one visualization, all the other must change according to that interaction, 
+everything must be interactive, transitions matter
+- Have filters by country, year, and use when it applies
