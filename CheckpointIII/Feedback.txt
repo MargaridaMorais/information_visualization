@@ -1,4 +1,4 @@
-Feedback on Checkpoint III:
+Feedback on Checkpoint III pre-presentation:
 
 - Dashboard has 4 visualizations
 - Each question has to involve at least 2 visualizations
@@ -10,9 +10,13 @@ everything must be interactive, transitions matter
 - Have filters by country, year, and use when it applies
 
 -----------------------------
+Feedback on Checkpoint III pos-presentation:
+
 - Using a map, it has to be easy to select a country
 - It's not a scatterplot, it's a line chart
 - Parallel coordinate plots don't make sense in the case of Early leavers and Adult Participation in 
 Learning, years are not to be ordinal so you can't change their order
 - Heatmaps are ok, years missing
-- Map can be used to show more information than just the time spent reading
+- Map can be used to show more information than just the time spent reading (??)
+
+
