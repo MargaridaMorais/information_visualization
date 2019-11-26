@@ -1,15 +1,32 @@
-// const initScatterPlot = (data) => {
-   
-    const margin = {top : 30 , right: 10 , bottom: 35 , left : 80 }
-	const height = 0.7 * window.innerHeight - (margin.top + margin.bottom);
-    const width = 0.49 * window.innerWidth - (margin.left + margin.right);
-    const colors = ["steelblue", "darkorange", "lightblue"];
-    var edu_levels = ['Level1', 'Level2', 'Level3'];
-    var countries,years ;     
 
-    var div = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
+const margin = {top : 30 , right: 10 , bottom: 35 , left : 80 }
+const height = 0.7 * window.innerHeight - (margin.top + margin.bottom);
+const width = 0.49 * window.innerWidth - (margin.left + margin.right);
+const colors = ["steelblue", "darkorange", "lightblue"];
+var edu_levels = ['Level1', 'Level2', 'Level3'];
+var countries,years ;     
+var countries_ext_name = {"BE": "Belgium","DE": "Germany","EE": "Estonia","EL": "Greece","ES": "Spain",
+                          "FR": "France" ,"IT": "Italy","LU": "Luxembourg","HU": "Hungary","NL": "Netherlands",
+                          "AT": "Austria","PL": "Poland","RO": "Romania","FI": "Finland","UK": "United Kingdom",
+                          "NO" : "Norway","RS": "Serbia","TR": "Turkey"  };
+// var div = d3.select("body").append("div")
+//     .attr("class", "tooltip")
+//     .style("opacity", 0);
+
+
+// Tooltip
+var tip = d3.tip().attr('class', 'd3-tip')
+    .html(function(d) {
+        var country_code = d.data.Country;
+        var text = "<strong style='color:red'>Country:</strong> <span style='color:white;text-transform:capitalize'>" + countries_ext_name[country_code] + "</span><br>";
+        text += "<strong>Superior :</strong> <span style='color:lightblue'>" +  d.data.Level3 + "€" + "</span><br>";
+        text += "<strong>Intermedium:</strong> <span style='color:darkorange'>" + d.data.Level2 + "€" + "</span><br>";
+        text += "<strong>Basic:</strong> <span style='color:steelblue'>" + d.data.Level1 + "€" + "</span><br>";
+        // text += "<strong>Population:</strong> <span style='color:red'>" + d3.format(",.0f")(d.population) + "</span><br>";
+        return text;
+    });
+
+    // CREATE the content SVG
     var stackedBars = d3.select("#svgStackedBars").append("g")
     //  .attr("transform", "translate(,-45)")
      .attr('height', height + margin.top + margin.bottom)
@@ -19,7 +36,9 @@
     var y = d3.scaleLinear().rangeRound([height  - margin.bottom, margin.top]);
     var z   = d3.scaleOrdinal().domain(edu_levels).range(colors);
     var x = d3.scaleBand().range([width  ,0]).padding(.2);
-
+     
+    // add tip to svg
+     stackedBars.call(tip);
     // legends : education level description + rect with colors
     var legend = stackedBars.selectAll(".legend")
     .data(colors)
@@ -42,9 +61,9 @@
     .style("fill", "#AAA")
     .text(function(d, i) { 
     switch (i) {
-        case 0: return "Level3 : Superior Education";
-        case 1: return "Level2 : High School Education";
-        case 2: return "Level1 : Basic Education";
+        case 0: return "Superior";
+        case 1: return "Intermedium";
+        case 2: return "Basic ";
         }
     });
     var Idiom_title = stackedBars.append("text")
@@ -53,7 +72,7 @@
     .attr("font-size", "18px")
     .style("text-anchor", "middle")
     .style("fill", "#AAA")
-    .text("Country Income by Education Level ");
+    .text(" Average Income by Education Level ");
 
     var x_axis_legend = stackedBars.append("text")
      .attr("x", width + 15)
@@ -69,24 +88,9 @@
       .text("Income in thousand(s) €");
 
 
-// var formattedData;               
-// var mydata;
 d3.json("content/data/income_by_edu.json").then(
       d => chart(d)
-//     //  console.log(data);
-//     years =  [... new Set(data.map(d => d.Year))];
-//     countries = [... new Set(data.map(d=> d.Country))];
-//      mydata = data; 
-//      var options = d3.select("#year").selectAll("option")
-//      .data(years)
-//      .enter().append("option")
-//      .text(d => d);
-//      // Draw legend
 
-
-
-    // update(d3.select("#year").node().value);
-    // initScatterPlot(data);
  ).catch(function(err){
      console.log(err);
  })
@@ -108,11 +112,11 @@ d3.json("content/data/income_by_edu.json").then(
         .text(d => d);
          
 
-    var xAxis = stackedBars.append("g")
+    stackedBars.append("g")
         .attr("transform", "translate( 0," + (height - margin.bottom)+  ")")
         .attr("class", "x-axis");
 
-	var yAxis = stackedBars.append("g")
+    stackedBars.append("g")
 		.attr("class", "y-axis");
 
 	
@@ -160,38 +164,32 @@ d3.json("content/data/income_by_edu.json").then(
 
 		bars.enter().append("rect")
             .attr("width", x.bandwidth())
-            .on("mouseover", function (d) {
-                div.transition()
-                  .duration(200)
-                  .style("opacity", .9)
-                  .text("Ola")
-                  .style("left", (d3.event.pageX) + "px")
-                  .style("top", (d3.event.pageY - 28) + "px");
-              })
-              .on("mouseout", function (d) {
-                div.transition()
-                  .duration(500)
-                  .style("opacity", 0);
-              })
+            .on("mouseover", tip.show)
+        .on("mouseout", tip.hide)
+            // .on("mouseover",
+            
+            // function (d) {
+            //      console.log(d);
+            //     div.transition()
+            //       .duration(200)
+            //       .style("opacity", .9)
+            //       .text("<strong>Level1</strong> : <span style='color:red'>" +d.data.Level1 +"</span><br>Level2: " + d.data.Level2)
+            //       .style("left", (d3.event.pageX) + "px")
+            //       .style("top", (d3.event.pageY - 28) + "px");
+            //   }
+              
+            //   )
+            //   .on("mouseout", function (d) {
+            //     div.transition()
+            //       .duration(500)
+            //       .style("opacity", 0);
+            //   })
 			.merge(bars)
 		.transition().duration(speed)
 			.attr("x", d => x(d.data.Country))
 			.attr("y", d => y(d[1]))
 			.attr("height", d => y(d[0]) - y(d[1]));
-		// var text = stackedBars.selectAll(".text")
-        //     .data(data, d => d.Country)
-        //     .attr("fill","#AAA");
 
-		// text.exit().remove()
-
-		// text.enter().append("text")
-		// 	.attr("class", "text")
-		// 	.attr("text-anchor", "middle")
-		// 	.merge(text)
-		// .transition().duration(speed)
-		// 	.attr("x", d => x(d.Contry) + x.bandwidth() / 2)
-		// 	.attr("y", d => y(d.total) - 5)
-		// 	.text(d => d.Country);
 	}
 
 	var select = d3.select("#year")

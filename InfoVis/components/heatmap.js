@@ -32,15 +32,15 @@ const initHeatMap = (data) => {
         //         .attr("fill", "red")
         //         .attr("width", 18)
         //         .attr("height", 18);
-      var init_y = 115;
-      for(var i= 0 ; i < 4; i++){
-            for (var j = 0 ; j < 18 ; j++){
+      var init_y = 160;
+      for(var i= 0 ; i < 18; i++){
+            for (var j = 0 ; j < 4 ; j++){
                 heatmap_svg.append("rect")
-                .attr("x", i*18)
-                .attr("y", init_y + j*13 )
+                .attr("x", i*26 - 10)
+                .attr("y", init_y + j*32 )
                 .attr("fill", "red")
-                .attr("width", 16)
-                .attr("height", 12);
+                .attr("width", 25)
+                .attr("height", 30);
             }
       }
 
