@@ -49,14 +49,6 @@ var color_scale = d3.scaleSequential(d3.interpolateYlOrRd);
         
         color_scale.domain([-17,17]);
         var percentages_lines =  [...new Set(data.map(d=> d.Percentage))];
-        // console.log(years_lines);
-        // console.log(countries_lines);
-        // console.log(percentages_lines);
-        
-
-        // console.log("Height_lines : " , height_lines);
-        // console.log("Width_lines : " , width_lines);
-
 
        linesChart.append("g")
        .attr("transform", "translate(" + margin_lines.left/2 + ", " + (height_lines + margin_lines.top) +")")

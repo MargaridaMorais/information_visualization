@@ -56,13 +56,13 @@ var tip = d3.tip().attr('class', 'd3-tip')
     legend.append("text")
     .attr("x", width - 40)
     .attr("y", 50)
-    .attr("font-size", "9.5px")
+    .attr("font-size", "15px")
     .style("text-anchor", "start")
     .style("fill", "#AAA")
     .text(function(d, i) { 
     switch (i) {
-        case 0: return "Superior";
-        case 1: return "Intermedium";
+        case 0: return "Higher";
+        case 1: return "Intermediate";
         case 2: return "Basic ";
         }
     });
