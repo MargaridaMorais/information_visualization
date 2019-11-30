@@ -22,7 +22,6 @@ var tip = d3.tip().attr('class', 'd3-tip')
         text += "<strong>Superior :</strong> <span style='color:lightblue'>" +  d.data.Level3 + "€" + "</span><br>";
         text += "<strong>Intermedium:</strong> <span style='color:darkorange'>" + d.data.Level2 + "€" + "</span><br>";
         text += "<strong>Basic:</strong> <span style='color:steelblue'>" + d.data.Level1 + "€" + "</span><br>";
-        // text += "<strong>Population:</strong> <span style='color:red'>" + d3.format(",.0f")(d.population) + "</span><br>";
         return text;
     });
 
@@ -47,15 +46,15 @@ var tip = d3.tip().attr('class', 'd3-tip')
     .attr("transform", function(d, i) { return "translate(30," + i * 14 + ")"; });
   // 
     legend.append("rect")
-    .attr("x", width - 60)
-    .attr("y", 40)
+    .attr("x", width - 20)
+    .attr("y", 90)
     .attr("width", 13)
     .attr("height", 13)
     .style("fill", function(d, i) {return colors.reverse().slice()[i];});
 
     legend.append("text")
-    .attr("x", width - 40)
-    .attr("y", 50)
+    .attr("x", width )
+    .attr("y", 100)
     .attr("font-size", "15px")
     .style("text-anchor", "start")
     .style("fill", "#AAA")

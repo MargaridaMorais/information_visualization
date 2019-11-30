@@ -28,36 +28,61 @@ var color_scale = d3.scaleSequential(d3.interpolateYlOrRd);
     });
 
     linesChart.call(tip_lines);
-
+   //  Axis  
     var y_scale_perc = d3.scaleLinear().range([height_lines , margin_lines.top]);
-    var x_scale_years = d3.scaleLinear().range([width_lines + margin_lines.left ,0]);
+    var x_scale_years = d3.scaleLinear().range([width_lines + margin_lines.left ,margin.left]);
+
+    // Label : Idiom legend
     var earlyLeaver_title = linesChart.append("text")
-     .attr("x", (width + margin_lines.left)/2)
+     .attr("x", (width + margin_lines.left* 2)/ 2 )
      .attr("y", 20)
      .attr("font-size", "18px")
      .style("text-anchor", "middle")
      .style("fill", "#AAA")
      .text("Education Early Leaver ");
   
+
+    /// Label  :  y axis
+    var y_axis_legend = linesChart.append("text")
+      .attr("x", - margin_lines.left/2 - 120 )
+      .attr("y", height_lines - 140 )
+      .attr("transform", "rotate(-90)")
+      .style("fill", "#AAA")
+      .text("Percentage (%) ");
+   
+   ///  Label :  x axis
+
+   var x_axis_legend = linesChart.append("text")
+      .attr("x", width_lines + margin_lines.left +  20)
+      .attr("y", height_lines + margin_lines.top + 15)
+      .style("fill", "#AAA")
+      .text("Years");
+
+
+
     d3.json("content/data/early_leaver.json").then(function(data){
         var current_dataset = data;
         // console.log("Early_leaver : ", data);
         var years_lines   = [...new Set(data.map(d => d.Year))].reverse();
         var countries_lines = [...new Set(data.map(d => d.Country))];
         var countries_Indexes = countries_lines.map(i => countries_lines.indexOf(i));
-        console.log(countries_Indexes);
+        // console.log(countries_Indexes);
         
-        color_scale.domain([-17,17]);
+        color_scale.domain([0,17]);
         var percentages_lines =  [...new Set(data.map(d=> d.Percentage))];
 
+        // console.log("First Color : ", color_scale(2));
+        // console.log("Second Color : ", color_scale(3));
+
+
        linesChart.append("g")
-       .attr("transform", "translate(" + margin_lines.left/2 + ", " + (height_lines + margin_lines.top) +")")
+       .attr("transform", "translate(0, " + (height_lines + margin_lines.top) +")")
        .attr("class", "x-axis");
        x_scale_years.domain(d3.extent(data, function(d){return d.Year;}).reverse());
        linesChart.selectAll(".x-axis").call(d3.axisBottom(x_scale_years).tickFormat(d3.format("")));
        
         linesChart.append("g")
-        .attr("transform", "translate(" + margin_lines.left/2 + ", " + margin_lines.top+")" )       
+        .attr("transform", "translate(" + margin_lines.left + ", " + margin_lines.top+")" )       
         .attr("class", "y-axis"); 
         y_scale_perc.domain([0, d3.max(percentages_lines) + 10]);
 		linesChart.selectAll(".y-axis")
@@ -71,7 +96,7 @@ var color_scale = d3.scaleSequential(d3.interpolateYlOrRd);
         var aux_array= [];
        
         data_instances.forEach(function(element){
-            aux_array.push({'x' : x_scale_years(element.Year) + margin_lines.left/2, 'y': y_scale_perc(element.Percentage),
+            aux_array.push({'x' : x_scale_years(element.Year) , 'y': y_scale_perc(element.Percentage),
                             'Country': element.Country, 'Percentage': element.Percentage, 'Year': element.Year})       
         })
         
@@ -87,7 +112,7 @@ var color_scale = d3.scaleSequential(d3.interpolateYlOrRd);
     .on("mouseover", tip_lines.show)
     .on("mouseout", tip_lines.hide)
     .attr("class", "dot") // Assign a class for styling
-    .attr("cx",  function(d) { return x_scale_years(d.Year) + margin_lines.left/2} )
+    .attr("cx",  function(d) { return x_scale_years(d.Year)} )
     .attr("cy", function(d) { return y_scale_perc(d.Percentage) })
     .attr("fill","#ffab00")
     .attr("r", 4.5)
