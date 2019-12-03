@@ -76,7 +76,18 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 		.enter()
 		.append("path")
 		.attr("d", geo_path)
-		.on("mouseover", function(d){ this.style["fill"]="rgba(8, 81, 156, 0.2)";})
+		.on("mouseover", function(d){ 
+			this.style["fill"]="rgba(8, 81, 156, 0.2)";
+			// Specify where to put label of text
+            /*svg.append("text").attr({
+				id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
+				 x: function() { return xScale(d.x) - 30; },
+				 y: function() { return yScale(d.y) - 15; }
+			 })
+			 .text(function() {
+			   return [d.x, d.y];  // Value of the text
+			 });*/
+		})
 		.on("mouseout", function(d, i){ this.style["fill"] = color_list[i%5]; })
 		.on("click", function(d, i){ 
 			var name = json.features[i].properties.NAME;
