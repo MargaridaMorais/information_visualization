@@ -46,47 +46,62 @@ var mapChart = d3.select("#svgMap").append("g")
 			//Define map projection
 
 */          // Color list
-		 var color_list = ["#fef0d9","#fdcc8a","#fc8d59","#e34a33","#b30000"];
+var color_list = ["#fef0d9","#fdcc8a","#fc8d59","#e34a33","#b30000"];
 
-			var projection = d3.geoMercator() //utiliser une projection standard pour aplatir les pôles, voir D3 projection plugin
-								   .center([ 40, 60 ]) //comment centrer la carte, longitude, latitude
-								  .translate([ mapChart_w/2 + 150 , mapChart_h/2.7 ]) // centrer l'image obtenue dans le svg
-								   .scale([ mapChart_w/1.4])// zoom, plus la valeur est petit plus le zoom est gros 
-      						 .rotate([0,0,-2.7]);
+var countryList = [];
 
-			//Define path generator
-			var geo_path = d3.geoPath()
-							 .projection(projection);
+var projection = d3.geoMercator() //utiliser une projection standard pour aplatir les pôles, voir D3 projection plugin
+						.center([ 40, 60 ]) //comment centrer la carte, longitude, latitude
+						.translate([ mapChart_w/2 + 150 , mapChart_h/2.7 ]) // centrer l'image obtenue dans le svg
+						.scale([ mapChart_w/1.4])// zoom, plus la valeur est petit plus le zoom est gros 
+					.rotate([0,0,-2.7]);
+
+//Define path generator
+var geo_path = d3.geoPath()
+					.projection(projection);
 
 
-			//Create SVG
-			// var svg = d3.select("#container")
-			// 			.append("svg")
-			// 			.attr("width", w)
-			// 			.attr("height", h);
+//Create SVG
+// var svg = d3.select("#container")
+// 			.append("svg")
+// 			.attr("width", w)
+// 			.attr("height", h);
 
-			//Load in GeoJSON data
-			d3.json("content/data/us-10m.v1.json").then( function(json) {
-				 console.log("Ola estou aqui");
-				//Bind data and create one path per GeoJSON feature
-				mapChart.selectAll("path")
-				   .data(json.features)
-				   .enter()
-				   .append("path")
-				   .attr("d", geo_path)
-				   .on("mouseover", function(d){ this.style["fill"]="rgba(8, 81, 156, 0.2)";})
-				//    .attr("stroke", "rgba(8, 81, 156, 0.2)")
-				//    .attr("stroke", "white")
-				   .attr("stroke", "#AAA")
-				   .attr("fill", function(d,i){ return color_list[i%5];  })
-				//    .attr("fill", "rgba(8, 81, 156, 0.6)")
-
-				   ;
-		
-			}).catch( function(err){
-				console.log(err);
+//Load in GeoJSON data
+d3.json("content/data/us-10m.v1.json").then( function(json) {
+		console.log("Ola estou aqui");
+	//Bind data and create one path per GeoJSON feature
+	mapChart.selectAll("path")
+		.data(json.features)
+		.enter()
+		.append("path")
+		.attr("d", geo_path)
+		.on("mouseover", function(d){ this.style["fill"]="rgba(8, 81, 156, 0.2)";})
+		.on("mouseout", function(d, i){ this.style["fill"] = color_list[i%5]; })
+		.on("click", function(d, i){ 
+			var name = json.features[i].properties.NAME;
+			var index = countryList.indexOf(name);
+			if(index > -1){
+				this.style["stroke"] = "#AAA"; 
+				countryList.splice(index, 1);
+			} else {
+				countryList.push(name);
+				this.style["stroke"]="rgba(1, 1, 1, 0.2)";
 			}
-			);
+			console.log(countryList);
+			})
+	//    .attr("stroke", "rgba(8, 81, 156, 0.2)")
+	//    .attr("stroke", "white")
+		.attr("stroke", "#AAA")
+		.attr("fill", function(d,i){ return color_list[i%5];  })
+	//    .attr("fill", "rgba(8, 81, 156, 0.6)")
+
+		;
+
+}).catch( function(err){
+	console.log(err);
+}
+);
 
 
 
