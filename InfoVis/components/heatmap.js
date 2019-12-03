@@ -2,7 +2,7 @@
 
 const initHeatMap = (data) => {
     const margin = {top : 10 , right: 10 , bottom: 30, left : 50 };
-    const height = 0.5 * window.innerHeight - (margin.top + margin.bottom);
+    const height = 0.4 * window.innerHeight - (margin.top + margin.bottom);
     const width = 0.3 * window.innerWidth - (margin.left + margin.right);
 
     var tip_heatmap = d3.tip().attr('class', 'd3-tip2')
@@ -134,7 +134,7 @@ const initHeatMap = (data) => {
         //         .attr("fill", "red")
         //         .attr("width", 18)
         //         .attr("height", 18);
-      var init_y = 120;
+      var init_y = 90;
       for(var i= 0 ; i < 18; i++){
 
           // add Years in the beginning of each rows

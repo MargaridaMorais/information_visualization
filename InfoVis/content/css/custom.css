@@ -190,3 +190,8 @@ circle.earth {
   top: 100%;
   left: 0;
 }
+
+/* geopath:hover {
+  fill: rgba(8, 81, 156, 0.2);
+  cursor:pointer;
+} */
