@@ -19,9 +19,9 @@ var tip = d3.tip().attr('class', 'd3-tip')
     .html(function(d) {
         var country_code = d.data.Country;
         var text = "<strong style='color:red'>Country:</strong> <span style='color:white;text-transform:capitalize'>" + countries_ext_name[country_code] + "</span><br>";
-        text += "<strong>Superior :</strong> <span style='color:lightblue'>" +  d.data.Level3 + "€" + "</span><br>";
-        text += "<strong>Intermedium:</strong> <span style='color:darkorange'>" + d.data.Level2 + "€" + "</span><br>";
-        text += "<strong>Basic:</strong> <span style='color:steelblue'>" + d.data.Level1 + "€" + "</span><br>";
+        text += "<strong>Superior :</strong> <span style='color:lightblue'>" + Math.ceil(d.data.Level3/1000) + "K €" + "</span><br>";
+        text += "<strong>Intermedium:</strong> <span style='color:darkorange'>" +  Math.ceil(d.data.Level2/1000) + "K €" + "</span><br>";
+        text += "<strong>Basic:</strong> <span style='color:steelblue'>" + Math.ceil(d.data.Level1/1000) + "K €" + "</span><br>";
         return text;
     });
 
