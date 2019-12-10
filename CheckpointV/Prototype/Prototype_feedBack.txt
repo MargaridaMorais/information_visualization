@@ -1,0 +1,23 @@
+Coisas a melhorar :
+
+  - Adicionar legendas a todos os idiomas
+
+  - Para lineChart atualizar o escala no eixo y(percentagem de )       de acordo com os valores da percentagem maxima é
+    dos paises selecionadas no mapa.
+
+  - Aplicar o padrão slave-master :
+     - Master em principio é o Mapa
+     - Slave são os restantes idiomas
+          -Podemos aplicar Slave-Master entre os outros slaves
+  - Adicionar algum tipo de interactividade no Heatmap
+     - adicionar legendas das cores
+     - Se calhar um mecanismo de ordenamento baseado na cor             (percentagem)
+
+
+Sugestões do prof :
+  - No Average Income by Education Level Filtrar/Selecionar por
+    Level
+  
+  - No Average Income by Education Level Filtrar/Selecionar por
+    Level e isso afeta o idioma Books and Newspapers :Household Expenditure                        
+    
