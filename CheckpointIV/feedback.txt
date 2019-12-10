@@ -1,0 +1,7 @@
+- Titulo da Visualização
+- Pôr uma caixa no topo do mapa, e pôr o titulo por cima
+- O heatmap não pode ser estático, será que devíamos trocar por outra viz?
+- Os tamanhos das fontes e o tipo de fonte está diferente
+- Na tool tip, azul escuro não se vê bem sobre preto
+- Ter os valores de dinheiro em 140K e não com 140 000
+- Na tool tip, em vez de aparecer, por exemplo, 38583€ aparecer 39K€
