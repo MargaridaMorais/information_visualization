@@ -86,6 +86,13 @@ var tip = d3.tip().attr('class', 'd3-tip')
       .style("fill", "#AAA")
       .text("Income in thousand(s) €");
 
+    // Income format  10000 --> 10k € 
+    var formatSi = d3.format("~s");
+    function income_k_format(x){
+        var s = formatSi(x);
+              
+        return  s;
+    }
 
 d3.json("content/data/income_by_edu.json").then(
       d => chart(d)
@@ -136,7 +143,7 @@ d3.json("content/data/income_by_edu.json").then(
         x.domain(data.map(function(d){return d.Country;}));
         
 		stackedBars.selectAll(".y-axis").transition().duration(speed)
-			.call(d3.axisLeft(y))
+			.call(d3.axisLeft(y).tickFormat(income_k_format))
 
 		// data.sort(d3.select("#sort").property("checked")
 		// 	? (a, b) => b.total - a.total
