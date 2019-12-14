@@ -39,9 +39,9 @@ var map_tip = d3.tip().attr('class', 'd3-tip3')
 var color_list = ["#fef0d9","#fdcc8a","#fc8d59","#e34a33","#b30000"];
 var countryList = [];
 var projection = d3.geoMercator() //utiliser une projection standard pour aplatir les pôles, voir D3 projection plugin
-						.center([ 40, 60 ]) //comment centrer la carte, longitude, latitude
+						.center([ 30, 60 ]) //comment centrer la carte, longitude, latitude
 						.translate([ mapChart_w/2 + 150 , mapChart_h/2.7 ]) // centrer l'image obtenue dans le svg
-						.scale([ mapChart_w/1.4])// zoom, plus la valeur est petit plus le zoom est gros 
+						.scale([ mapChart_w/1.35])// zoom, plus la valeur est petit plus le zoom est gros 
 					.rotate([0,0,-2.7]);
 
 //Define path generator
@@ -58,7 +58,7 @@ d3.json("content/data/time_spend_reading.json").then(function(data){
 
 //Load in GeoJSON data
 d3.json("content/data/us-10m.v1.json").then( function(json) {
-		console.log("Ola estou aqui");
+
 	//Bind data and create one path per GeoJSON feature
 	mapChart.selectAll("path")
 		.data(json.features)

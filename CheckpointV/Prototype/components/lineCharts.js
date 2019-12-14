@@ -66,9 +66,21 @@ var color_scale = d3.scaleSequential(d3.interpolateYlOrRd);
         var years_lines   = [...new Set(data.map(d => d.Year))].reverse();
         var countries_lines = [...new Set(data.map(d => d.Country))];
         var countries_Indexes = countries_lines.map(i => countries_lines.indexOf(i));
-        // console.log(countries_Indexes);
+        var countries_ext_name = {"BE": "Belgium","DE": "Germany","EE": "Estonia","EL": "Greece","ES": "Spain",
+        "FR": "France" ,"IT": "Italy","LU": "Luxembourg","HU": "Hungary","NL": "Netherlands",
+        "AT": "Austria","PL": "Poland","RO": "Romania","FI": "Finland","UK": "United Kingdom",
+        "NO" : "Norway","RS": "Serbia","TR": "Turkey"  };
+        var codes ={ "Belgium" : "BE", "Germany": "DE", "Estonia":"EE","Greece":"EL","Spain":"ES",
+        "France":"FR" ,"Italy":"IT","Luxembourg": "LU","Hungary":"HU","Netherlands":"NL",
+        "Austria":"AT","Poland":"PL","Romania":"RO", "Finland":"FI","United Kingdom":"UK",
+        "Norway": "NO","Serbia":"RS","Turkey" :"TR"  };
         
-        color_scale.domain([0,17]);
+        var options = d3.select("#countries").selectAll("option")
+            .data(Object.values(countries_ext_name))
+            .enter().append("option")
+            .text(d => d);
+    
+        color_scale.domain([-17,17]);
         var percentages_lines =  [...new Set(data.map(d=> d.Percentage))];
 
         // console.log("First Color : ", color_scale(2));
@@ -113,7 +125,7 @@ var color_scale = d3.scaleSequential(d3.interpolateYlOrRd);
     .on("mouseout", tip_lines.hide)
     .attr("class", "dot") // Assign a class for styling
     .attr("cx",  function(d) { return x_scale_years(d.Year)} )
-    .attr("cy", function(d) { return y_scale_perc(d.Percentage) })
+    .attr("cy", function (d) { return y_scale_perc(d.Percentage) })
     .attr("fill","#ffab00")
     .attr("r", 4.5)
     
