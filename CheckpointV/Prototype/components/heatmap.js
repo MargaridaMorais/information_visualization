@@ -1,4 +1,12 @@
 //svgHeatmap
+var countries_ext_name = {"BE": "Belgium","DE": "Germany","EE": "Estonia","EL": "Greece","ES": "Spain",
+"FR": "France" ,"IT": "Italy","LU": "Luxembourg","HU": "Hungary","NL": "Netherlands",
+"AT": "Austria","PL": "Poland","RO": "Romania","FI": "Finland","UK": "United Kingdom",
+"NO" : "Norway","RS": "Serbia","TR": "Turkey"  };
+var codes ={ "Belgium" : "BE", "Germany": "DE", "Estonia":"EE","Greece":"EL","Spain":"ES",
+"France":"FR" ,"Italy":"IT","Luxembourg": "LU","Hungary":"HU","Netherlands":"NL",
+"Austria":"AT","Poland":"PL","Romania":"RO", "Finland":"FI","United Kingdom":"UK",
+"Norway": "NO","Serbia":"RS","Turkey" :"TR"  };
 
 const initHeatMap = (data) => {
     const margin = {top : 10 , right: 10 , bottom: 30, left : 50 };
@@ -6,13 +14,16 @@ const initHeatMap = (data) => {
     const width = 0.3 * window.innerWidth - (margin.left + margin.right);
 
     var tip_heatmap = d3.tip().attr('class', 'd3-tip2')
-    .html(function(d) {
-        var country_code = d.Country;
-        var text = "<strong style='color:red'>Country:</strong> <span style='color:white;text-transform:capitalize'>" + countries_ext_name[country_code] + "</span><br>";
-        text += "<strong>Percentage:</strong> <span>" +  d.Percentage + "%" + "</span><br>";
-        text += "<strong>Year:</strong> <span>" +  d.Year  + "</span><br>";
-
-        // text += "<strong>Population:</strong> <span style='color:red'>" + d3.format(",.0f")(d.population) + "</span><br>";
+    .html(function(el,target) {
+        var year = el.Year;
+        var perc = el.Percentage;
+        var code = el.Country;
+        console.log("Current Year : ", year);
+        console.log("Current Perc : ", perc);
+        console.log("Current Code : ", code);
+        var text = "<strong style='color:red;font-size:14px'>Country:</strong> <span style='color:white;text-transform:capitalize;font-size:14px'>" + countries_ext_name[code] + "</span><br>";
+        text += "<strong style='font-size:14px'>Perc:</strong> <span  style='font-size:14px'>" +  perc + "%" + "</span><br>";
+        text += "<strong style='font-size:12px'>Year:</strong> <span  style='font-size:14px'>" +  year   + "</span><br>";
         return text;
     });
 
@@ -33,8 +44,9 @@ const initHeatMap = (data) => {
         // // #2 load the data from external file
         // var countries, years ;
         var perc_by_country = [];
+  
+        heatmap_svg.call(tip_heatmap);
 
-        
         countries = [...new Set(data.map(function(d){return d.Country;}))]
         years = [...new Set(data.map(function(d){return d.Year;}))]
         var perc_list = data.map(c =>  c.Percentage);
@@ -50,62 +62,11 @@ const initHeatMap = (data) => {
                 console.log(perc_by_country[0]);
             }
         } 
-        // y_scale.domain(years);
-        
-        // var current_data = perc_by_country[0];
-        // console.log("Current_data : " , current_data);
-        // // current_data.forEach(function(d){
 
-        //     // console.log("C : " ,y_scale(d.Year));
-        //     // console.log("Y : " ,x_scale(d.Country));
-        //     heatmap_svg.append("rect")
-        //         .attr("width", 10)
-        //         .attr("height",10)
-        //         .attr("fill","red")
-        //         .attr("x", width/2)
-        //         .attr("y", height/2)
+        console.log("All : " , perc_by_country);
 
-        //         heatmap_svg.append("rect")
-        //         .attr("width", 25)
-        //         .attr("height", 30)
-        //         .attr("fill","yellow")
-        //         .attr("y", y_scale(2015))
-        //         .attr("x", x_scale("TR"))
 
-        //         heatmap_svg.append("rect")
-        //         .attr("width", 25)
-        //         .attr("height", 30)
-        //         .attr("fill","blue")
-        //         .attr("y", y_scale(2016))
-        //         .attr("x", x_scale("TR"));
 
-        //         heatmap_svg.append("rect")
-        //         .attr("width", 25)
-        //         .attr("height", 30)
-        //         .attr("fill","orange")
-        //         .attr("y", y_scale(2017)  )
-        //         .attr("x", x_scale("TR"));
-        //         console.log("My y_scale : ", y_scale(2017) );
-            
-   //--------------------- Year -------------------------------    
-        // })
-        // perc_by_country.forEach(function(v,index){
-        //     console.log("Current Index : " , index);
-        //     v.forEach(function(el){
-                
-        //         console.log("Country : " , el.Country);
-        //         console.log("Percentage : " , el.Percentage);
-        //         heatmap_svg.append("rect")
-        //         .attr("height",  10 )
-        //         .attr("width", 10 )
-        //         .attr("fill","red")
-        //         .attr("y", y_scale(el.Year) )
-        //         .attr("x", x_scale(el.Country))
-
-        //     })
-        // })
-
-;
        
             
 
@@ -127,15 +88,10 @@ const initHeatMap = (data) => {
         // var percentage_by_year = [];
         countries = [...new Set(data.map(function(d){return d.Country;}))]
         years = [...new Set(data.map(function(d){return d.Year;}))]
-        // y_scale(years);
-        // heatmap_svg.append("rect")
-        //         .attr("x",10)
-        //         .attr("y", 100)
-        //         .attr("fill", "red")
-        //         .attr("width", 18)
-        //         .attr("height", 18);
-      var init_y = 90;
-      for(var i= 0 ; i < 18; i++){
+
+        var init_y = 90;
+        console.log(perc_by_country);
+        for(var i= 0 ; i < 18; i++){
 
           // add Years in the beginning of each rows
           if( i == 0){
@@ -161,12 +117,17 @@ const initHeatMap = (data) => {
             .text( 2015)
           }
             for (var j = 0 ; j < 3 ; j++){
-                heatmap_svg.append("rect")
+                var el = perc_by_country[i][j];
+                console.log(el);
+                heatmap_svg.append("rect")        
+                // .data(perc_by_country[i][j])
                 .attr("x", i*26 - 10)
                 .attr("y", init_y + j*32 )
                 .attr("fill", perc_color_scale(perc_by_country[i][j].Percentage))
                 .attr("width", 25)
-                .attr("height", 30);
+                .attr("height", 30)
+                .on("mouseover",function(){console.log("This is this : ", this, el);tip_heatmap.show(el,this)})
+                .on("mouseout", tip_heatmap.hide);
                // add Country distict in the columns
                 if(j==0){
                     heatmap_svg.append("text")
