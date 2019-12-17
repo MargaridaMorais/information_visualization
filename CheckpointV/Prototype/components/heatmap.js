@@ -30,6 +30,7 @@ const initHeatMap = (data) => {
 
         var perc_color_scale = d3.scaleSequential(d3.interpolateYlGnBu);
         var perc_by_country = [];
+        var perc_filtered = []
         // add tooltip to svg idiom
         heatmap_svg.call(tip_heatmap);
 
@@ -48,9 +49,12 @@ const initHeatMap = (data) => {
                 console.log(perc_by_country[0]);
             }
         }
+        perc_filtered = [...new Set(data.map(d => d.Percentage))].sort();
+   
+        
 
         console.log("All : " , perc_by_country);
-
+        console.log("Perc_Filtered : ", perc_filtered);
 
 
 
@@ -143,11 +147,32 @@ const initHeatMap = (data) => {
     //   .attr("transform", "rotate(-90)")
       // .attr("class", "axisText")
       .attr("y", margin.top)
-      .attr("x", (width +  margin.left + margin.right)/2 )
+      .attr("x", (width +  margin.left + margin.right)/2  + 15)
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .style("fill", "#AAA")
-      .text("Books and Newspapers: Household Expenditure");
+      .text("Household Income Expenditure in Books and Newspapers(%) ");
+
+    // add legends
+    for(var i= 0 ; i < 12; i++){
+                heatmap_svg.append("rect")
+                .attr("x",  i*39 - 10  )
+                .attr("y", init_y*2 + 35  )
+                .attr("fill", perc_color_scale(perc_filtered[i]))
+                .attr("width", 38)
+                .attr("height", 10);
+
+                // add percentage 
+
+                heatmap_svg.append("text")
+                    .attr("y" , init_y*2 + 25 )
+                    .attr("x" ,   i*39 + 6.5 )
+                    .style("text-anchor", "middle")
+                    .style("fill", "#AAA")
+                    .text(perc_filtered[i] + "%" )
+                    .style("font-size", "12px")
+                
+    }
 
 }
 

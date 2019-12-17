@@ -5,11 +5,9 @@ const mapChart_h = 0.6 * window.innerHeight - (mapChart_margin.top + mapChart_ma
 const mapChart_w = 0.3 * window.innerWidth - (mapChart_margin.left + mapChart_margin.right);
 
 var mapChart = d3.select("#svgMap").append("g")
-    //  .attr("transform", "translate(,-45)")
      .attr('height', mapChart_h + mapChart_margin.top + mapChart_margin.bottom)
      .attr('width', mapChart_w + mapChart_margin.left + mapChart_margin.right )
 	 .attr("transform", "translate(" + mapChart_margin.left + ", " + mapChart_margin.top + ")");
-	// .attr("fill", "red");
 
 // Label : Idiom legend
 var readingtime_title = mapChart.append("text")
