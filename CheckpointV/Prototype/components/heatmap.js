@@ -3,10 +3,7 @@ var countries_ext_name = {"BE": "Belgium","DE": "Germany","EE": "Estonia","EL": 
 "FR": "France" ,"IT": "Italy","LU": "Luxembourg","HU": "Hungary","NL": "Netherlands",
 "AT": "Austria","PL": "Poland","RO": "Romania","FI": "Finland","UK": "United Kingdom",
 "NO" : "Norway","RS": "Serbia","TR": "Turkey"  };
-var codes ={ "Belgium" : "BE", "Germany": "DE", "Estonia":"EE","Greece":"EL","Spain":"ES",
-"France":"FR" ,"Italy":"IT","Luxembourg": "LU","Hungary":"HU","Netherlands":"NL",
-"Austria":"AT","Poland":"PL","Romania":"RO", "Finland":"FI","United Kingdom":"UK",
-"Norway": "NO","Serbia":"RS","Turkey" :"TR" };
+
 
 const initHeatMap = (data) => {
     const margin = {top : 10 , right: 10 , bottom: 30, left : 50 };
@@ -46,15 +43,15 @@ const initHeatMap = (data) => {
             var elements = data.filter(function(d){ return d.Country == current_country; })
             perc_by_country.push(elements.reverse());
             if(i == 0){
-                console.log(perc_by_country[0]);
+                // console.log(perc_by_country[0]);
             }
         }
         perc_filtered = [...new Set(data.map(d => d.Percentage))].sort();
    
         
 
-        console.log("All : " , perc_by_country);
-        console.log("Perc_Filtered : ", perc_filtered);
+        // console.log("All : " , perc_by_country);
+        // console.log("Perc_Filtered : ", perc_filtered);
 
 
 
@@ -81,7 +78,7 @@ const initHeatMap = (data) => {
         years = [...new Set(data.map(function(d){return d.Year;}))]
 
         var init_y = 90;
-        console.log(perc_by_country);
+        // console.log(perc_by_country);
         for(var i= 0 ; i < 18; i++){
 
           // add Years in the beginning of each rows
@@ -119,7 +116,7 @@ const initHeatMap = (data) => {
                 .attr("height", 30)
 
                 .on("mouseover",function(){
-                    console.log("This", this.attributes);
+                    // console.log("This", this.attributes);
                     var current_x  = parseInt(this.attributes[0].value);
                     var current_y  = parseInt(this.attributes[1].value);
                     var i_index = getListIndex(current_x);
@@ -128,7 +125,7 @@ const initHeatMap = (data) => {
                     var country_perc = perc_by_country[i_index][j_index].Percentage;
                     var curr_year =   perc_by_country[i_index][j_index].Year;
                     // countries_ext_name
-                    console.log("Country :" + country_code + ",Perc : " + country_perc + "Year : " + curr_year);
+                    // console.log("Country :" + country_code + ",Perc : " + country_perc + "Year : " + curr_year);
                     tip_heatmap.show(el,d3.select(this),countries_ext_name[country_code], country_perc,curr_year)})
                 .on("mouseout", tip_heatmap.hide);
                // add Country distict in the columns
@@ -163,7 +160,6 @@ const initHeatMap = (data) => {
                 .attr("height", 10);
 
                 // add percentage 
-
                 heatmap_svg.append("text")
                     .attr("y" , init_y*2 + 25 )
                     .attr("x" ,   i*39 + 6.5 )
