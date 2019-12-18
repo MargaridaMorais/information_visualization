@@ -13,8 +13,8 @@ const initHeatMap = (data) => {
     var tip_heatmap = d3.tip().attr('class', 'd3-tip2')
     .html(function(el,target,country,perc,curr_year) {
         var text = "<strong style='color:red;font-size:14px'>Country:</strong> <span style='color:white;text-transform:capitalize;font-size:14px'>" + country + "</span><br>";
-        text += "<strong style='font-size:14px'>Perc:</strong> <span  style='font-size:14px'>" +  (perc!= 0 ? perc + "%" : "No Data")  + "</span><br>";
-        text += "<strong style='font-size:12px'>Year:</strong> <span  style='font-size:14px'>" +  curr_year   + "</span><br>";
+        text +=    "<strong style='font-size:14px'>Perc:</strong> <span  style='font-size:14px'>" +  (perc!= 0 ? perc + "%" : "No Data")  + "</span><br>";
+        text +=    "<strong style='font-size:12px'>Year:</strong> <span  style='font-size:14px'>" +  curr_year   + "</span><br>";
         return text;
     });
 

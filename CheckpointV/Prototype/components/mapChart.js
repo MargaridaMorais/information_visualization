@@ -19,7 +19,7 @@ var mapChart = d3.select("#svgMap").append("g")
 
 // Label : Idiom legend
 var readingtime_title = mapChart.append("text")
-.attr("x", (width + margin_lines.right* 2)/ 2  - 155)
+.attr("x", (width + 10* 2)/ 2  - 155)
 .attr("y", 20)
 .attr("font-size", "18px")
 .style("text-anchor", "middle")
@@ -60,10 +60,11 @@ mapChart.call(map_tip);
 // Load reading habits data
 d3.json("content/data/time_spend_reading.json").then(function(data){
    data_time_spend_reading = data;
-	var perc = [...new Set(data.map(function(d,i){return parseInt(d.Minutes);}))].sort().reverse();
+	var perc = [...new Set(data.map(function(d,i){return parseInt(d.Minutes);}))].sort(function(a, b){return a-b});
 	var my_color =[0];
 	perc.forEach(function(d){ my_color.push(d)})
-	 console.log("PercColorScale : ", my_color);
+	my_color = my_color.sort(function(a, b){return a-b});
+	console.log("PercColorScale : ", my_color);
 	//    var min_perc =  d3.min(perc);
 	   var max_perc = d3.max(perc);
 	   perc_map_color_scale.domain( my_color);
@@ -147,7 +148,7 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 			// get the country to ma
 			var code = json.features[i].properties.ISO2;
 			var index = countryList.indexOf(name);
-
+             console.log("This is linechart Object : " ,linesChart);
 			if(index > -1){
 				this.style["stroke"] = "#AAA";
 				countryList.splice(index, 1);

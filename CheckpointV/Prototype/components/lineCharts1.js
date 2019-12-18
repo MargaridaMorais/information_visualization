@@ -57,8 +57,15 @@ var linesChart = d3.select("#svgLines").append("g")
       .style("fill", "#AAA")
       .text("Years");
     
-
-
+      var countries_ext_name = {"BE": "Belgium","DE": "Germany","EE": "Estonia","EL": "Greece","ES": "Spain",
+      "FR": "France" ,"IT": "Italy","LU": "Luxembourg","HU": "Hungary","NL": "Netherlands",
+      "AT": "Austria","PL": "Poland","RO": "Romania","FI": "Finland","UK": "United Kingdom",
+      "NO" : "Norway","RS": "Serbia","TR": "Turkey"  };
+      var codes ={ "Belgium" : "BE", "Germany": "DE", "Estonia":"EE","Greece":"EL","Spain":"ES",
+      "France":"FR" ,"Italy":"IT","Luxembourg": "LU","Hungary":"HU","Netherlands":"NL",
+      "Austria":"AT","Poland":"PL","Romania":"RO", "Finland":"FI","United Kingdom":"UK",
+      "Norway": "NO","Serbia":"RS","Turkey" :"TR"  };
+    
     d3.json("content/data/early_leaver.json").then(function(data){ 
         
         var current_dataset = data;
@@ -66,14 +73,7 @@ var linesChart = d3.select("#svgLines").append("g")
         var years_lines   = [...new Set(data.map(d => d.Year))].reverse();
         var countries_lines = [...new Set(data.map(d => d.Country))];
         var countries_Indexes = countries_lines.map(i => countries_lines.indexOf(i));
-        var countries_ext_name = {"BE": "Belgium","DE": "Germany","EE": "Estonia","EL": "Greece","ES": "Spain",
-        "FR": "France" ,"IT": "Italy","LU": "Luxembourg","HU": "Hungary","NL": "Netherlands",
-        "AT": "Austria","PL": "Poland","RO": "Romania","FI": "Finland","UK": "United Kingdom",
-        "NO" : "Norway","RS": "Serbia","TR": "Turkey"  };
-        var codes ={ "Belgium" : "BE", "Germany": "DE", "Estonia":"EE","Greece":"EL","Spain":"ES",
-        "France":"FR" ,"Italy":"IT","Luxembourg": "LU","Hungary":"HU","Netherlands":"NL",
-        "Austria":"AT","Poland":"PL","Romania":"RO", "Finland":"FI","United Kingdom":"UK",
-        "Norway": "NO","Serbia":"RS","Turkey" :"TR"  };
+        
         
         var options = d3.select("#countries").selectAll("option")
             .data(Object.values(countries_ext_name))
@@ -100,13 +100,13 @@ var linesChart = d3.select("#svgLines").append("g")
         update(d3.select("#countries").property("value"), 0);
            var paths=[];
         function update(input, speed) {
-                console.log("Selected: ", codes[input]);
+                // console.log("Selected: ", codes[input]);
                 var countryCode = codes[input];
                 
-                console.log("IS  : list_selected_elements :",list_selected_elements);
+                // console.log("IS  : list_selected_elements :",list_selected_elements);
                 // check if is the initial setting (no country selected,add the 1st country)
                 if(list_selected_elements.length == 0){
-                    console.log(" Waba ta shi");
+                    // console.log(" Waba ta shi");
                     list_selected_elements.push(countryCode);
                 }
                 // otherwise 
@@ -121,7 +121,7 @@ var linesChart = d3.select("#svgLines").append("g")
     
                         }
                         list_selected_elements.push(countryCode);
-                         console.log("Current_List : ", list_selected_elements);
+                        //  console.log("Current_List : ", list_selected_elements);
                     }
                    
                 }      
@@ -137,11 +137,11 @@ var linesChart = d3.select("#svgLines").append("g")
                 linesChart.selectAll(".y-axis").transition().duration(speed)
                 .call(d3.axisLeft(y_scale_perc))
 
-                console.log(" The current dataset : ",  current_dataset);
+                // console.log(" The current dataset : ",  current_dataset);
                 list_selected_elements.forEach(function(d){                  
                 var aux_array= [];
                 var cur_country_dataset = current_dataset.filter(el=> el.Country == d);
-                console.log(" The current element : ",d );
+                // console.log(" The current element : ",d );
                 cur_country_dataset.forEach(function(element){
                 aux_array.push({x : x_scale_years(element.Year) , y: y_scale_perc(element.Percentage),
                         'Country': element.Country, 'Percentage': element.Percentage, 'Year': element.Year})       
@@ -149,7 +149,7 @@ var linesChart = d3.select("#svgLines").append("g")
                 paths.push(aux_array); 
                 })
             // }
-               console.log("Current paths : ",paths); 
+               // console.log("Current paths : ",paths); 
 
             // dots 
             linesChart.selectAll(".dot").remove();
@@ -184,7 +184,7 @@ var linesChart = d3.select("#svgLines").append("g")
 
             // my_paths.exit().remove();  
             paths=[];        
-            console.log(" My group of lines : ", linesChart.selectAll(".lines"));  
+            // console.log(" My group of lines : ", linesChart.selectAll(".lines"));  
         }
 
     
