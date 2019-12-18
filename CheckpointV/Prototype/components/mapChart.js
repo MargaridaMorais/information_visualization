@@ -19,7 +19,7 @@ var mapChart = d3.select("#svgMap").append("g")
 
 // Label : Idiom legend
 var readingtime_title = mapChart.append("text")
-.attr("x", (width + 10* 2)/ 2  - 155)
+.attr("x", (width + 10* 2)/ 2  - 135)
 .attr("y", 20)
 .attr("font-size", "18px")
 .style("text-anchor", "middle")
@@ -65,9 +65,8 @@ d3.json("content/data/time_spend_reading.json").then(function(data){
 	perc.forEach(function(d){ my_color.push(d)})
 	my_color = my_color.sort(function(a, b){return a-b});
 	console.log("PercColorScale : ", my_color);
-	//    var min_perc =  d3.min(perc);
-	   var max_perc = d3.max(perc);
-	   perc_map_color_scale.domain( my_color);
+	
+	perc_map_color_scale.domain( my_color);
 	
 	   for(var i= 0 ; i < my_color.length - 1; i++){
 		   console.log("K : ", my_color[i]);
@@ -75,7 +74,7 @@ d3.json("content/data/time_spend_reading.json").then(function(data){
 		
 		if(i == 0 ){
 			mapChart.append("text")
-			.attr("x", 52)
+			.attr("x", 65)
 			.attr("y", 330)
 			.attr("font-size", "12px")
 			.style("text-anchor", "middle")
@@ -116,8 +115,6 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 		.attr("d", geo_path)
 		.on("mouseover", function(d,i){
 
-			// console.log("Current Country : ",name);
-			//perc_map_color_scale(data_time_spend_reading[name].Percentage)
 			this.style["fill"]="rgba(8, 81, 156, 0.2)";
 
 			// map_tip.show(d,i,json);
@@ -137,9 +134,7 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 			}else{
 				var name = codes[name];
 				var aux = data_time_spend_reading.filter(function(d,i){ return d.Country == name});
-				//  console.log("my object: ", aux);
-				 this.style["fill"] = perc_map_color_scale(parseInt(aux[0].Minutes));
-				// var m_target = data_time_spend_reading.filter(d => d.Country == codes[name] );
+				this.style["fill"] = perc_map_color_scale(parseInt(aux[0].Minutes));
 			}
 			
 			map_tip.hide(d,i,json); })
@@ -148,7 +143,6 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 			// get the country to ma
 			var code = json.features[i].properties.ISO2;
 			var index = countryList.indexOf(name);
-             console.log("This is linechart Object : " ,linesChart);
 			if(index > -1){
 				this.style["stroke"] = "#AAA";
 				countryList.splice(index, 1);
@@ -158,8 +152,7 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 			}
 
 			})
-	//    .attr("stroke", "rgba(8, 81, 156, 0.2)")
-	//    .attr("stroke", "white")
+
 		.attr("stroke", "#AAA")
 		.attr("fill", function(d,i){
 
@@ -172,17 +165,13 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 			}else{
 				var name = codes[name];
 				var aux = data_time_spend_reading.filter(function(d,i){ return d.Country == name});
-				//  console.log("my object: ", aux);
 				return perc_map_color_scale(parseInt(aux[0].Minutes));
-				// var m_target = data_time_spend_reading.filter(d => d.Country == codes[name] );
 			}
 
 		  })
-	//    .attr("fill", "rgba(8, 81, 156, 0.6)")
 
 		;
 
-		// console.log("Printing other json file  :" ,  data_time_spend_reading);
 }).catch( function(err){
 	console.log(err);
 }

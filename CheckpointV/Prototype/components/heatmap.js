@@ -146,9 +146,20 @@ const initHeatMap = (data) => {
       .attr("y", margin.top)
       .attr("x", (width +  margin.left + margin.right)/2  + 15)
       .attr("dy", "1em")
+      .attr("font-size", "18px")
       .style("text-anchor", "middle")
       .style("fill", "#AAA")
-      .text("Household Income Expenditure in Books and Newspapers(%) ");
+      .text("Expenditure in Books and Newspapers");
+      
+      heatmap_svg.append("text")
+      .attr("y", margin.top + 20)
+      .attr("x", (width +  margin.left + margin.right)/2  + 25)
+      .attr("dy", "1em")
+      .attr("font-size", "12px")
+      .style("text-anchor", "middle")
+      .style("fill", "#AAA")
+      .text("by percentage of Household Income");
+         
 
     // add legends
     for(var i= 0 ; i < 12; i++){
