@@ -43,8 +43,6 @@ var map_tip = d3.tip().attr('class', 'd3-tip3')
 
 // Color list
 var perc_map_color_scale = d3.scaleOrdinal().range(["#ffffff","#fff7ec","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
-
-// var color_list = ["#fef0d9","#fdcc8a","#fc8d59","#e34a33","#b30000"];
 var countryList = [];
 var projection = d3.geoMercator() //utiliser une projection standard pour aplatir les pôles, voir D3 projection plugin
 						.center([ 30, 60 ]) //comment centrer la carte, longitude, latitude
@@ -61,12 +59,12 @@ mapChart.call(map_tip);
 d3.json("content/data/time_spend_reading.json").then(function(data){
    data_time_spend_reading = data;
 	var perc = [...new Set(data.map(function(d,i){return parseInt(d.Minutes);}))].sort(function(a, b){return a-b});
-	var my_color =[0];
+	var my_color = [0];
 	
 	perc.forEach(function(d){ my_color.push(d)})
 	my_color = my_color.sort(function(a, b){return a-b});
-	console.log("PercColorScale : ", my_color);
-	console.log("PercColor : ", perc);
+	// console.log("PercColorScale : ", my_color);
+	// console.log("PercColor : ", perc);
 	perc_map_color_scale.domain( my_color);
 	
 	   for(var i= 0 ; i < my_color.length ; i++){
@@ -96,8 +94,7 @@ d3.json("content/data/time_spend_reading.json").then(function(data){
 			.style("text-anchor", "middle")
 			.style("fill", "#AAA")
 			.text(my_color[i])
-			.style("font-size", "12px")
-		
+			.style("font-size", "12px");		
 }
 
 }).catch(function(err){
@@ -122,8 +119,6 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 			map_tip.show(d,i,json,data_time_spend_reading);
 			map_tip.style("left", (d3.event.pageX - 50) + "px")
             .style("top", (d3.event.pageY - 60) + "px");
-
-
 		})
 		.on("mouseout", function(d, i){ 
 			var name = json.features[i].properties.NAME;
@@ -140,7 +135,9 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 			
 			map_tip.hide(d,i,json); })
 		.on("click", function(d, i){
+			 console.log( "LinesCharts : ", infoVis);
 			var name = json.features[i].properties.NAME;
+			
 			// get the country to ma
 			var code = json.features[i].properties.ISO2;
 			var index = countryList.indexOf(name);
@@ -148,6 +145,7 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 				this.style["stroke"] = "#AAA";
 				countryList.splice(index, 1);
 			} else {
+				infoVis.update(name, 750);
 				countryList.push(name);
 				this.style["stroke"]="rgba(1, 1, 1, 0.2)";
 			}
@@ -164,10 +162,10 @@ d3.json("content/data/us-10m.v1.json").then( function(json) {
 				// console.log("CurrentName : ", name);
 				return perc_map_color_scale(0);
 			}else{
-				var name = codes[name];
-				var aux = data_time_spend_reading.filter(function(d,i){ return d.Country == name});
-				return perc_map_color_scale(parseInt(aux[0].Minutes));
-			}
+				 var name = codes[name];
+				 var aux = data_time_spend_reading.filter(function(d,i){ return d.Country == name});
+				 return perc_map_color_scale(parseInt(aux[0].Minutes));
+			    }
 
 		  })
 
