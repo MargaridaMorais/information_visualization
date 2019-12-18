@@ -42,7 +42,7 @@ var map_tip = d3.tip().attr('class', 'd3-tip3')
 	});
 
 // Color list
-var perc_map_color_scale = d3.scaleOrdinal().range(["#ffffff","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
+var perc_map_color_scale = d3.scaleOrdinal().range(["#ffffff","#fff7ec","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
 
 // var color_list = ["#fef0d9","#fdcc8a","#fc8d59","#e34a33","#b30000"];
 var countryList = [];
@@ -62,13 +62,14 @@ d3.json("content/data/time_spend_reading.json").then(function(data){
    data_time_spend_reading = data;
 	var perc = [...new Set(data.map(function(d,i){return parseInt(d.Minutes);}))].sort(function(a, b){return a-b});
 	var my_color =[0];
+	
 	perc.forEach(function(d){ my_color.push(d)})
 	my_color = my_color.sort(function(a, b){return a-b});
 	console.log("PercColorScale : ", my_color);
-	
+	console.log("PercColor : ", perc);
 	perc_map_color_scale.domain( my_color);
 	
-	   for(var i= 0 ; i < my_color.length - 1; i++){
+	   for(var i= 0 ; i < my_color.length ; i++){
 		   console.log("K : ", my_color[i]);
 		   
 		
